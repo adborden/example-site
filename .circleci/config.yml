@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: infrastructureascode/aws-cli
+    environment:
+      AWS_DEFAULT_REGION=us-west-1
+    steps:
+    - checkout
+    - run: aws s3 index.html s3://example.sites.adborden.net/
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
